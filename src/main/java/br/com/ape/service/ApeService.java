@@ -17,7 +17,7 @@ public class ApeService {
         return (count == dna.length) ? true : false;
     }
 
-    private boolean isDna (String [] dna){
+    private boolean isDnaSequency (String [] dna){
         int count = 0;
 
         for (String d: dna) {
