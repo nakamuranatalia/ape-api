@@ -9,15 +9,14 @@ public class ApeService {
 
     private boolean isQuadratic (String [] dna){
         int count = 0;
-        for (String i: dna) {
-            if(i.length() == dna.length) count ++;
+
+        for (String d: dna) {
+            if(d.length() == dna.length) count ++;
         }
-        if(count == dna.length){
-            return  true;
-        }else{
-            return false;
-        }
+
+        return (count == dna.length) ? true : false;
     }
+
     public void isSimian(String[] dna) {
     }
 }
