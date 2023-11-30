@@ -29,6 +29,10 @@ public class ApeService {
         return (count == dna.length) ? true : false;
     }
 
+    private boolean isValidDna(String [] dna){
+        return dna.length < 4 ? false : true;
+    }
+
     public void isSimian(String[] dna) {
     }
 }
