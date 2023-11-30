@@ -17,6 +17,18 @@ public class ApeService {
         return (count == dna.length) ? true : false;
     }
 
+    private boolean isDna (String [] dna){
+        int count = 0;
+
+        for (String d: dna) {
+            if(d.matches("^[ATCG]+$")){
+                count ++;
+            }
+        }
+
+        return (count == dna.length) ? true : false;
+    }
+
     public void isSimian(String[] dna) {
     }
 }
