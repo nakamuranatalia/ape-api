@@ -2,6 +2,7 @@ package br.com.ape.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 @Service
@@ -31,6 +32,14 @@ public class ApeService {
 
     private boolean isValidDna(String [] dna){
         return dna.length < 4 ? false : true;
+    }
+
+    private ArrayList<String> transformInTwoDimensional(String [] dna){
+        ArrayList<String> dnaList = new ArrayList<>();
+        for (String d:dna) {
+           dnaList.add(Arrays.toString(d.split("")));
+        }
+        return dnaList;
     }
 
     public void isSimian(String[] dna) {
