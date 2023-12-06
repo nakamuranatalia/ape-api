@@ -15,7 +15,7 @@ public class ApeService {
             if(d.length() == dna.length) count ++;
         }
 
-        return (count == dna.length) ? true : false;
+        return (count == dna.length);
     }
 
     private boolean isDnaSequency (String [] dna){
@@ -27,11 +27,11 @@ public class ApeService {
             }
         }
 
-        return (count == dna.length) ? true : false;
+        return (count == dna.length);
     }
 
     private boolean isValidDna(String [] dna){
-        return dna.length < 4 ? false : true;
+        return dna.length < 4;
     }
 
     private ArrayList<String> transformInTwoDimensional(String [] dna){
