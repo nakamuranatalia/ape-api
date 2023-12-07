@@ -46,12 +46,12 @@ public class ApeService {
         return splitDna;
     }
 
-    private String[][] transformInTwoDimensional(String [] dna, int size){
-        String[][] dnaMatrix = new String[size][size];
+    private String[][] transformInTwoDimensional(String [] dna, int arraySize){
+        String[][] dnaMatrix = new String[arraySize][arraySize];
         int position = 0;
 
-        for(int row = 0; row < size; row++)
-            for(int column = 0; column < size; column++){
+        for(int row = 0; row < arraySize; row++)
+            for(int column = 0; column < arraySize; column++){
                 dnaMatrix[row][column] = dna[position];
                 position++;
             }
