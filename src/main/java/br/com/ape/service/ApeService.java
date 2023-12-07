@@ -62,11 +62,11 @@ public class ApeService {
     private boolean verifyDnaHorizontally(String[][] dna, int arraySize){
         boolean broke = false;
 
-        for (int i = 0; i < arraySize; i++){
-            for(int j = 0; j <= arraySize - 4; j++){
-                if(dna[i][j].equals(dna[i][j+1])
-                        && dna[i][j].equals(dna[i][j+2])
-                        && dna[i][j].equals(dna[i][j+3])){
+        for (int row = 0; row < arraySize; row++){
+            for(int column = 0; column <= arraySize - 4; column++){
+                if(dna[row][column].equals(dna[row][column+1])
+                        && dna[row][column].equals(dna[row][column+2])
+                        && dna[row][column].equals(dna[row][column+3])){
                     broke = true;
                 }
             }
