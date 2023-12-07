@@ -33,12 +33,17 @@ public class ApeService {
         return dna.length < 4;
     }
 
-    private ArrayList<String> transformInTwoDimensional(String [] dna){
-        ArrayList<String> dnaList = new ArrayList<>();
-        for (String d:dna) {
-           dnaList.add(Arrays.toString(d.split("")));
-        }
-        return dnaList;
+    private String[][] transformInTwoDimensional(String [] dna, int size){
+        String[][] dnaMatrix = new String[size][size];
+        int position = 0;
+
+        for(int row = 0; row < size; row++)
+            for(int column = 0; column < size; column++){
+                dnaMatrix[row][column] = dna[position];
+                position++;
+            }
+
+        return dnaMatrix;
     }
 
     private String[] splitDna(String [] dna){
