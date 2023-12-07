@@ -59,6 +59,24 @@ public class ApeService {
         return dnaMatrix;
     }
 
+    private boolean verifyDnaHorizontally(String[][] dna, int arraySize){
+        boolean broke = false;
+
+        for (int i = 0; i < arraySize; i++){
+            for(int j = 0; j <= arraySize - 4; j++){
+                if(dna[i][j].equals(dna[i][j+1])
+                        && dna[i][j].equals(dna[i][j+2])
+                        && dna[i][j].equals(dna[i][j+3])){
+                    broke = true;
+                }
+            }
+
+            if(broke) break;
+        }
+
+        return broke;
+    }
+
     public void isSimian(String[] dna) {
     }
 }
