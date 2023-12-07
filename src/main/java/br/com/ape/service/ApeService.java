@@ -77,6 +77,24 @@ public class ApeService {
         return broke;
     }
 
+    private boolean verifyDnaVertically(String[][] dna, int arraySize){
+        boolean broke = false;
+
+        for (int column = 0; column < arraySize; column++){
+            for(int row = 0; row <= arraySize - 4; row++){
+                if(dna[row][column].equals(dna[row+1][column])
+                        && dna[row][column].equals(dna[row+2][column])
+                        && dna[row][column].equals(dna[row+3][column])){
+                    broke = true;
+                }
+            }
+
+            if(broke) break;
+        }
+
+        return broke;
+    }
+
     public void isSimian(String[] dna) {
     }
 }
