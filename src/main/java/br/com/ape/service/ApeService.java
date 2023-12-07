@@ -33,6 +33,19 @@ public class ApeService {
         return dna.length < 4;
     }
 
+    private String[] splitDna(String [] dna){
+        ArrayList<String> dnaList = new ArrayList<>();
+
+        for(String i: dna)
+            for(String j: i.split("")){
+                dnaList.add(j);
+            }
+
+        String[] splitDna = dnaList.toArray(new String[dnaList.size()]);
+
+        return splitDna;
+    }
+
     private String[][] transformInTwoDimensional(String [] dna, int size){
         String[][] dnaMatrix = new String[size][size];
         int position = 0;
@@ -44,19 +57,6 @@ public class ApeService {
             }
 
         return dnaMatrix;
-    }
-
-    private String[] splitDna(String [] dna){
-       ArrayList<String> dnaList = new ArrayList<>();
-
-       for(String i: dna)
-           for(String j: i.split("")){
-               dnaList.add(j);
-           }
-
-       String[] splitDna = dnaList.toArray(new String[dnaList.size()]);
-
-       return splitDna;
     }
 
     public void isSimian(String[] dna) {
