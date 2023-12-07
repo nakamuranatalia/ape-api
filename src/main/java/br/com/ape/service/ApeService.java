@@ -3,7 +3,6 @@ package br.com.ape.service;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 @Service
 public class ApeService {
@@ -40,6 +39,19 @@ public class ApeService {
            dnaList.add(Arrays.toString(d.split("")));
         }
         return dnaList;
+    }
+
+    private String[] splitDna(String [] dna){
+       ArrayList<String> dnaList = new ArrayList<>();
+
+       for(String i: dna)
+           for(String j: i.split("")){
+               dnaList.add(j);
+           }
+
+       String[] splitDna = dnaList.toArray(new String[dnaList.size()]);
+
+       return splitDna;
     }
 
     public void isSimian(String[] dna) {
