@@ -95,6 +95,24 @@ public class ApeService {
         return broke;
     }
 
+    private boolean verifyDnaDiagonallyLeftToRight(String[][] dna, int arraySize){
+        boolean broke = false;
+
+        for (int row = 0; row < arraySize - 4; row++){
+            for(int column = 0; column <= arraySize - 4; column++){
+                if(dna[row][column].equals(dna[row+1][column+1])
+                        && dna[row][column].equals(dna[row+2][column+2])
+                        && dna[row][column].equals(dna[row+3][column+3])){
+                    broke = true;
+                }
+            }
+
+            if(broke) break;
+        }
+
+        return broke;
+    }
+
     public void isSimian(String[] dna) {
     }
 }
