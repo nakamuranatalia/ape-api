@@ -29,7 +29,7 @@ public class ApeService {
         return (count == dna.length);
     }
 
-    private boolean isValidDna(String [] dna){
+    private boolean isValidArray(String [] dna){
         return dna.length < 4;
     }
 
