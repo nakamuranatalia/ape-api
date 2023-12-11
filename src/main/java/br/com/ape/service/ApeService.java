@@ -131,6 +131,10 @@ public class ApeService {
         return broke;
     }
 
+    private boolean isValidDna(String[] dna){
+        return isQuadratic(dna) && isDnaSequence(dna) && isValidArray(dna);
+    }
+
     public void isSimian(String[] dna) {
     }
 }
