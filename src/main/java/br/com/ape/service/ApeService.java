@@ -30,7 +30,7 @@ public class ApeService {
     }
 
     private boolean isValidArray(String [] dna){
-        return dna.length < 4;
+        return dna.length > 4;
     }
 
     private String[] splitDna(String [] dna){
