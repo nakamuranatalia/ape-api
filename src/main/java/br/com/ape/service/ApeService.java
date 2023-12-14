@@ -1,11 +1,16 @@
 package br.com.ape.service;
 
+import lombok.RequiredArgsConstructor;
+import br.com.ape.repository.ApeRepository;
+import br.com.ape.model.Ape;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 @Service
+@RequiredArgsConstructor
 public class ApeService {
+    private final ApeRepository repository;
 
     private boolean isQuadratic (String [] dna){
         int count = 0;
