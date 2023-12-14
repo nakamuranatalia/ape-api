@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import br.com.ape.repository.ApeRepository;
 import br.com.ape.model.Ape;
 import org.springframework.stereotype.Service;
-
+import org.apache.tomcat.util.buf.StringUtils;
 import java.util.ArrayList;
 
 @Service
@@ -140,6 +140,38 @@ public class ApeService {
         return isQuadratic(dna) && isDnaSequence(dna) && isValidArray(dna);
     }
 
-    public void isSimian(String[] dna) {
+    public boolean isSimian(String[] dna) {
+
+        String dnaString = StringUtils.join(dna);
+
+        if (repository.existsByDna(dnaString)){
+            return repository.findByDna(dnaString).isSimian();
+        } else{
+            int length = dna.length;
+            String[][] dnaMatrix = transformInTwoDimensional(splitDna(dna), length);
+
+            if(verifyDnaHorizontally(dnaMatrix, length)
+                    && verifyDnaVertically(dnaMatrix, length)
+                    && verifyDnaDiagonallyLeftToRight(dnaMatrix, length)
+                    && verifyDnaDiagonallyRightToLeft(dnaMatrix, length)){
+                Ape ape = new Ape();
+
+                ape.setDna(dnaString);
+                ape.setSimian(true);
+
+                repository.save(ape);
+
+                return true;
+            }else{
+                Ape ape = new Ape();
+
+                ape.setDna(dnaString);
+                ape.setSimian(true);
+
+                repository.save(ape);
+
+                return false;
+            }
+        }
     }
 }
