@@ -136,9 +136,9 @@ public class ApeService {
             String[][] dnaMatrix = transformInTwoDimensional(splitDna(dna), length);
 
             if(verifyDnaHorizontally(dnaMatrix, length)
-                    && verifyDnaVertically(dnaMatrix, length)
-                    && verifyDnaDiagonallyLeftToRight(dnaMatrix, length)
-                    && verifyDnaDiagonallyRightToLeft(dnaMatrix, length)){
+                    || verifyDnaVertically(dnaMatrix, length)
+                    || verifyDnaDiagonallyLeftToRight(dnaMatrix, length)
+                    || verifyDnaDiagonallyRightToLeft(dnaMatrix, length)){
                 Ape ape = new Ape();
 
                 ape.setDna(dnaString);
@@ -151,7 +151,7 @@ public class ApeService {
                 Ape ape = new Ape();
 
                 ape.setDna(dnaString);
-                ape.setSimian(true);
+                ape.setSimian(false);
 
                 repository.save(ape);
 
