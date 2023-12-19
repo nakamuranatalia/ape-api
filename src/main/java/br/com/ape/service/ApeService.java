@@ -42,13 +42,9 @@ public class ApeService {
         ArrayList<String> dnaList = new ArrayList<>();
 
         for(String i: dna)
-            for(String j: i.split("")){
-                dnaList.add(j);
-            }
+            Collections.addAll(dnaList, i.split(""));
 
-        String[] splitDna = dnaList.toArray(new String[dnaList.size()]);
-
-        return splitDna;
+        return dnaList.toArray(new String[0]);
     }
 
     private String[][] transformInTwoDimensional(String [] dna, int arraySize){
