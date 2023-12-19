@@ -6,6 +6,7 @@ import br.com.ape.model.Ape;
 import org.springframework.stereotype.Service;
 import org.apache.tomcat.util.buf.StringUtils;
 import java.util.ArrayList;
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -61,75 +62,63 @@ public class ApeService {
     }
 
     private boolean verifyDnaHorizontally(String[][] dna, int arraySize){
-        boolean broke = false;
 
         for (int row = 0; row < arraySize; row++){
             for(int column = 0; column <= arraySize - 4; column++){
                 if(dna[row][column].equals(dna[row][column+1])
                         && dna[row][column].equals(dna[row][column+2])
                         && dna[row][column].equals(dna[row][column+3])){
-                    broke = true;
+                    return true;
                 }
             }
-
-            if(broke) break;
         }
 
-        return broke;
+        return false;
     }
 
     private boolean verifyDnaVertically(String[][] dna, int arraySize){
-        boolean broke = false;
 
         for (int column = 0; column < arraySize; column++){
             for(int row = 0; row <= arraySize - 4; row++){
                 if(dna[row][column].equals(dna[row+1][column])
                         && dna[row][column].equals(dna[row+2][column])
                         && dna[row][column].equals(dna[row+3][column])){
-                    broke = true;
+                    return true;
                 }
             }
-
-            if(broke) break;
         }
 
-        return broke;
+        return false;
     }
 
     private boolean verifyDnaDiagonallyLeftToRight(String[][] dna, int arraySize){
-        boolean broke = false;
 
         for (int row = 0; row < arraySize - 4; row++){
             for(int column = 0; column <= arraySize - 4; column++){
                 if(dna[row][column].equals(dna[row+1][column+1])
                         && dna[row][column].equals(dna[row+2][column+2])
                         && dna[row][column].equals(dna[row+3][column+3])){
-                    broke = true;
+                    return true;
                 }
             }
-
-            if(broke) break;
         }
 
-        return broke;
+        return false;
     }
 
     private boolean verifyDnaDiagonallyRightToLeft(String[][] dna, int arraySize){
-        boolean broke = false;
 
         for (int row = 0; row < arraySize - 4; row++){
             for(int column = arraySize - 1; column > arraySize - 3; column--){
                 if(dna[row][column].equals(dna[row+1][column-1])
                         && dna[row][column].equals(dna[row+2][column-2])
                         && dna[row][column].equals(dna[row+3][column-3])){
-                    broke = true;
+                    return true;
                 }
             }
-
-            if(broke) break;
         }
 
-        return broke;
+        return false;
     }
 
     public boolean isValidDna(String[] dna){
