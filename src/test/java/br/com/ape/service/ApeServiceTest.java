@@ -4,9 +4,13 @@ import br.com.ape.repository.ApeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import java.util.stream.Stream;
 
 @ExtendWith(MockitoExtension.class)
 public class ApeServiceTest {
@@ -17,12 +21,17 @@ public class ApeServiceTest {
     @InjectMocks
     private ApeService service;
 
-    @Test
-    public void givenNonSquareDna_whenIsDnaValid_thenReturnFalse(){
-        //Arrange
-        String[] dna = new String[]{"ATTG", "ATTT"};
-        boolean expectedResult = false;
+    static Stream<Arguments> invalidDna(){
+        return Stream.of(
+                Arguments.of(new String[]{"ATTG", "ATTT"}, false),
+                Arguments.of(new String[]{"ATTT", "LNVF"}, false),
+                Arguments.of(new String[]{"ATTG"}, false)
+        );
+    }
 
+    @ParameterizedTest
+    @MethodSource("invalidDna")
+    public void givenInvalidDna_whenIsDnaValid_thenReturnFalse(String[] dna, boolean expectedResult){
         //Act
         boolean result = service.isValidDna(dna);
 
@@ -30,38 +39,16 @@ public class ApeServiceTest {
         Assertions.assertEquals(expectedResult, result);
     }
 
-    @Test
-    public void givenNonDnaSequence_whenIsDnaValid_thenReturnFalse(){
-        //Arrange
-        String[] dna = new String[]{"ATTT", "LNVF"};
-        boolean expectedResult = false;
-
-        //Act
-        boolean result = service.isValidDna(dna);
-
-        //Assert
-        Assertions.assertEquals(expectedResult, result);
+    static Stream<Arguments> validDna(){
+        return Stream.of(
+                Arguments.of(new String[]{"ATTG", "ATTT", "TGCA", "GCAT"}, true),
+                Arguments.of(new String[]{"ATTGTT", "ATTTCC", "TGCAAC", "GCATTC", "ATTGTC", "GGGGCC"}, true)
+        );
     }
 
-    @Test
-    public void givenInvalidDnaArray_whenIsDnaValid_thenReturnFalse(){
-        //Arrange
-        String[] dna = new String[]{"ATTG"};
-        boolean expectedResult = false;
-
-        //Act
-        boolean result = service.isValidDna(dna);
-
-        //Assert
-        Assertions.assertEquals(expectedResult, result);
-    }
-
-    @Test
-    public void givenValidDna_whenIsDnaValid_thenReturnTrue(){
-        //Arrange
-        String[] dna = new String[]{"ATTG", "ATTT", "TGCA", "GCAT"};
-        boolean expectedResult = true;
-
+    @ParameterizedTest
+    @MethodSource("validDna")
+    public void givenValidDna_whenIsDnaValid_thenReturnTrue(String[] dna, boolean expectedResult) {
         //Act
         boolean result = service.isValidDna(dna);
 
