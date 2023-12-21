@@ -18,9 +18,12 @@ public class ApeController {
     @PostMapping
     @RequestMapping("/simian")
     public ResponseEntity<String> isSimian(@RequestBody String[] dna){
-        if(!service.isValidDna(dna)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Array format is incorrect");
 
-        if(service.isSimian(dna)){
+        String[] dnaUpperCase = service.arrayToUpperCase(dna);
+
+        if(!service.isValidDna(dnaUpperCase)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Array format is incorrect");
+
+        if(service.isSimian(dnaUpperCase)){
             return ResponseEntity.status(HttpStatus.OK).body("Informed DNA is simian");
         }else{
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Informed DNA is human");
