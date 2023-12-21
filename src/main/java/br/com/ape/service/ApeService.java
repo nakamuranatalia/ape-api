@@ -121,6 +121,14 @@ public class ApeService {
         return false;
     }
 
+    public String[] arrayToUpperCase(String[] dna){
+        for(int i = 0; i < dna.length; i++){
+            dna[i] = dna[i].toUpperCase();
+        }
+
+        return dna;
+    }
+
     public boolean isValidDna(String[] dna){
         return isQuadratic(dna) && isDnaSequence(dna) && isValidArray(dna);
     }
