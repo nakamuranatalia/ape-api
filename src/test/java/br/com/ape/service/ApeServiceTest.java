@@ -20,6 +20,26 @@ public class ApeServiceTest {
     @InjectMocks
     private ApeService service;
 
+    static Stream<Arguments> unformattedArray(){
+        return Stream.of(
+                Arguments.of(new String[]{"atty", "tgbv", "AfvT", "eVVF"}, new String[]{"ATTY", "TGBV", "AFVT", "EVVF"}),
+                Arguments.of(new String[]{"aTtT", "lNVF"},  new String[]{"ATTT", "LNVF"}),
+                Arguments.of(new String[]{"attg"},  new String[]{"ATTG"})
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("unformattedArray")
+    public void givenUnformattedArray_whenArrayToUpperCase_thenReturnArrayInUpperCase(String[] unformattedDna, String[] formattedDna){
+        //Act
+        String [] result = service.arrayToUpperCase(unformattedDna);
+
+        //Assert
+        for(int i = 0; i < formattedDna.length; i++){
+            Assertions.assertEquals(formattedDna[i], result[i]);
+        }
+    }
+
     static Stream<Arguments> invalidDna(){
         return Stream.of(
                 Arguments.of(new String[]{"ATTG", "ATTT"}, false),
