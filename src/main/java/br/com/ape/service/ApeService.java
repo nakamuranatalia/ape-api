@@ -93,7 +93,7 @@ public class ApeService {
 
     private boolean verifyDnaDiagonallyLeftToRight(String[][] dna, int arraySize){
 
-        for (int row = 0; row < arraySize - 4; row++){
+        for (int row = 0; row <= arraySize - 4; row++){
             for(int column = 0; column <= arraySize - 4; column++){
                 if(dna[row][column].equals(dna[row+1][column+1])
                         && dna[row][column].equals(dna[row+2][column+2])
@@ -108,8 +108,8 @@ public class ApeService {
 
     private boolean verifyDnaDiagonallyRightToLeft(String[][] dna, int arraySize){
 
-        for (int row = 0; row < arraySize - 4; row++){
-            for(int column = arraySize - 1; column > arraySize - 3; column--){
+        for (int row = 0; row <= arraySize - 4; row++){
+            for(int column = arraySize - 1; column >= 3; column--){
                 if(dna[row][column].equals(dna[row+1][column-1])
                         && dna[row][column].equals(dna[row+2][column-2])
                         && dna[row][column].equals(dna[row+3][column-3])){
