@@ -1,14 +1,12 @@
 package br.com.ape.controller;
 
 import br.com.ape.dto.ApeDto;
+import br.com.ape.dto.StatsDto;
 import br.com.ape.service.ApeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,5 +27,11 @@ public class ApeController {
         }else{
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Informed DNA is human");
         }
+    }
+
+    @GetMapping
+    @RequestMapping("/stats")
+    public StatsDto dnaStatistics(){
+        return service.retrieveStatistics();
     }
 }
