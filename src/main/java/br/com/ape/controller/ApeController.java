@@ -1,5 +1,6 @@
 package br.com.ape.controller;
 
+import br.com.ape.dto.ApeDto;
 import br.com.ape.service.ApeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,9 @@ public class ApeController {
 
     @PostMapping
     @RequestMapping("/simian")
-    public ResponseEntity<String> isSimian(@RequestBody String[] dna){
+    public ResponseEntity<String> isSimian(@RequestBody ApeDto ape){
 
-        String[] dnaUpperCase = service.arrayToUpperCase(dna);
+        String[] dnaUpperCase = service.arrayToUpperCase(ape.getDna());
 
         if(!service.isValidDna(dnaUpperCase)) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Array format is incorrect");
 
