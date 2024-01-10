@@ -10,4 +10,6 @@ public interface ApeRepository extends JpaRepository<Ape, Long> {
     boolean existsByDna (String dna);
 
     Ape findByDna (String dna);
+
+    long countByIsSimian(boolean isSimian);
 }
