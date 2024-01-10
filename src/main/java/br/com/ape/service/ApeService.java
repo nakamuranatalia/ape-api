@@ -1,5 +1,6 @@
 package br.com.ape.service;
 
+import br.com.ape.dto.StatsDto;
 import lombok.RequiredArgsConstructor;
 import br.com.ape.repository.ApeRepository;
 import br.com.ape.model.Ape;
@@ -166,5 +167,18 @@ public class ApeService {
                 return false;
             }
         }
+    }
+
+    public StatsDto retrieveStatistics(){
+        float mutantDna = repository.countByIsSimian(true);
+        float humanDna = repository.countByIsSimian(false);
+        float ratio = mutantDna/humanDna;
+
+        StatsDto stats = new StatsDto();
+        stats.setCountMutantDna(mutantDna);
+        stats.setCountHumanDna(humanDna);
+        stats.setRatio(ratio);
+
+        return stats;
     }
 }
