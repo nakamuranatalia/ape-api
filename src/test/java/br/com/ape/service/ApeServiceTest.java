@@ -1,7 +1,9 @@
 package br.com.ape.service;
 
+import br.com.ape.dto.StatsDto;
 import br.com.ape.repository.ApeRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.stream.Stream;
+
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ApeServiceTest {
@@ -110,5 +114,25 @@ public class ApeServiceTest {
 
         //Assert
         Assertions.assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void whenRetrieveStatistics_returnFilledStatsDto(){
+        //Arrange
+        when(repository.countByIsSimian(true)).thenReturn(10L);
+        when(repository.countByIsSimian(false)).thenReturn(4L);
+
+        StatsDto expectedResult = new StatsDto();
+        expectedResult.setCountMutantDna(10L);
+        expectedResult.setCountHumanDna(4L);
+        expectedResult.setRatio(2.5f);
+
+        //Act
+        StatsDto result = service.retrieveStatistics();
+
+        //Assert
+        Assertions.assertEquals(expectedResult.getCountHumanDna(),result.getCountHumanDna());
+        Assertions.assertEquals(expectedResult.getCountMutantDna(),result.getCountMutantDna());
+        Assertions.assertEquals(expectedResult.getRatio(),result.getRatio());
     }
 }
