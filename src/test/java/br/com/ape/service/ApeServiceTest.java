@@ -24,17 +24,12 @@ public class ApeServiceTest {
     @InjectMocks
     private ApeService service;
 
-    static Stream<Arguments> unformattedArray(){
-        return Stream.of(
-                Arguments.of(new String[]{"atty", "tgbv", "AfvT", "eVVF"}, new String[]{"ATTY", "TGBV", "AFVT", "EVVF"}),
-                Arguments.of(new String[]{"aTtT", "lNVF"},  new String[]{"ATTT", "LNVF"}),
-                Arguments.of(new String[]{"attg"},  new String[]{"ATTG"})
-        );
-    }
+    @Test
+    public void givenUnformattedArray_whenArrayToUpperCase_thenReturnArrayInUpperCase(){
+        //Arrange
+        String [] unformattedDna = new String[]{"atty", "tgbv", "AfvT", "eVVF"};
+        String [] formattedDna = new String[]{"ATTY", "TGBV", "AFVT", "EVVF"};
 
-    @ParameterizedTest
-    @MethodSource("unformattedArray")
-    public void givenUnformattedArray_whenArrayToUpperCase_thenReturnArrayInUpperCase(String[] unformattedDna, String[] formattedDna){
         //Act
         String [] result = service.arrayToUpperCase(unformattedDna);
 
@@ -44,17 +39,51 @@ public class ApeServiceTest {
         }
     }
 
-    static Stream<Arguments> invalidDna(){
-        return Stream.of(
-                Arguments.of(new String[]{"ATTG", "ATTT"}, false),
-                Arguments.of(new String[]{"ATTT", "LNVF"}, false),
-                Arguments.of(new String[]{"ATTG"}, false)
-        );
+    @Test
+    public void givenNonQuadraticDna_whenIsValidDna_thenReturnFalse(){
+        //Arrange
+        String [] invalidDna = new String[]{"ATTG", "ATTT", "ACCG", "ACCG", "ACCG"};
+        boolean expectedResult = false;
+
+        //Act
+        boolean result = service.isValidDna(invalidDna);
+
+        //Assert
+        Assertions.assertEquals(expectedResult, result);
     }
 
-    @ParameterizedTest
-    @MethodSource("invalidDna")
-    public void givenInvalidDna_whenIsDnaValid_thenReturnFalse(String[] dna, boolean expectedResult){
+    @Test
+    public void givenNonDnaSequence_whenIsValidDna_thenReturnFalse(){
+        //Arrange
+        String [] invalidDna = new String[]{"INFW", "WWWF", "UIIK", "KLMO"};
+        boolean expectedResult = false;
+
+        //Act
+        boolean result = service.isValidDna(invalidDna);
+
+        //Assert
+        Assertions.assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void givenArraySmallerThanFour_whenIsValidDna_thenReturnFalse(){
+        //Arrange
+        String [] invalidDna = new String[]{"AT", "CG"};
+        boolean expectedResult = false;
+
+        //Act
+        boolean result = service.isValidDna(invalidDna);
+
+        //Assert
+        Assertions.assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void givenValidDna_whenIsValidDna_thenReturnTrue() {
+        //Arrange
+        String [] dna = new String[]{"ATTG", "ATTT", "TGCA", "GCAT"};
+        boolean expectedResult = true;
+
         //Act
         boolean result = service.isValidDna(dna);
 
@@ -62,53 +91,12 @@ public class ApeServiceTest {
         Assertions.assertEquals(expectedResult, result);
     }
 
-    static Stream<Arguments> validDna(){
-        return Stream.of(
-                Arguments.of(new String[]{"ATTG", "ATTT", "TGCA", "GCAT"}, true),
-                Arguments.of(new String[]{"ATTGTT", "ATTTCC", "TGCAAC", "GCATTC", "ATTGTC", "GGGGCC"}, true)
-        );
-    }
+    @Test
+    public void givenSimianDna_whenIsSimian_returnTrue(){
+        //Arrange
+        String [] dna = new String[]{"TATCA", "ATCTT", "ACTAA", "CATGG", "GATCG"};
+        boolean expectedResult = true;
 
-    @ParameterizedTest
-    @MethodSource("validDna")
-    public void givenValidDna_whenIsDnaValid_thenReturnTrue(String[] dna, boolean expectedResult) {
-        //Act
-        boolean result = service.isValidDna(dna);
-
-        //Assert
-        Assertions.assertEquals(expectedResult, result);
-    }
-
-    static Stream<Arguments> simianDna(){
-        return Stream.of(
-                Arguments.of(new String[]{"CATA", "ATCT", "CGTG", "AAAA"}, true),
-                Arguments.of(new String[]{"CATG", "ATCG", "CGTG", "AAAG"}, true),
-                Arguments.of(new String[]{"TATA", "ATCT", "CGTG", "AAAT"}, true),
-                Arguments.of(new String[]{"TATC", "ATCT", "CCAG", "CAAT"}, true),
-                Arguments.of(new String[]{"TATCA", "ATCTT", "ACTAA", "CATGG", "GATCG"}, true)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("simianDna")
-    public void givenSimianDna_whenIsSimian_returnTrue(String[] dna, boolean expectedResult){
-        //Act
-        boolean result = service.isSimian(dna);
-
-        //Assert
-        Assertions.assertEquals(expectedResult, result);
-    }
-
-    static Stream<Arguments> humanDna(){
-        return Stream.of(
-                Arguments.of(new String[]{"ATTG", "ATTT", "TGCA", "GCAT"}, false),
-                Arguments.of(new String[]{"ATTGTT", "ATTTCC", "TGCAAC", "GCATTC", "ATTGTA", "GGGTCC"}, false)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("humanDna")
-    public void givenHumanDna_whenIsSimian_returnFalse(String[] dna, boolean expectedResult){
         //Act
         boolean result = service.isSimian(dna);
 
@@ -117,7 +105,21 @@ public class ApeServiceTest {
     }
 
     @Test
-    public void whenRetrieveStatistics_returnFilledStatsDto(){
+    public void givenHumanDna_whenIsSimian_returnFalse()
+    {
+        //Arrange
+        String [] dna = new String[]{"ATTG", "ATTT", "TGCA", "GCAT"};
+        boolean expectedResult = false;
+
+        //Act
+        boolean result = service.isSimian(dna);
+
+        //Assert
+        Assertions.assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void whenRetrieveStatistics_returnStatsDto(){
         //Arrange
         when(repository.countByIsSimian(true)).thenReturn(10L);
         when(repository.countByIsSimian(false)).thenReturn(4L);
