@@ -4,6 +4,7 @@ import br.com.ape.dto.StatsDto;
 import lombok.RequiredArgsConstructor;
 import br.com.ape.repository.ApeRepository;
 import br.com.ape.model.Ape;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.apache.tomcat.util.buf.StringUtils;
 import java.util.ArrayList;
@@ -169,6 +170,7 @@ public class ApeService {
         }
     }
 
+    @Cacheable("dna_stats")
     public StatsDto retrieveStatistics(){
         float mutantDna = repository.countByIsSimian(true);
         float humanDna = repository.countByIsSimian(false);
