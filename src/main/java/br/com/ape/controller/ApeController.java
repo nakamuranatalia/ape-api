@@ -4,6 +4,8 @@ import br.com.ape.dto.ApeDto;
 import br.com.ape.dto.StatsDto;
 import br.com.ape.service.ApeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ public class ApeController {
 
     @PostMapping
     @RequestMapping("/simian")
+    @CacheEvict(value="dna_stats", allEntries = true)
     public ResponseEntity<String> isSimian(@RequestBody ApeDto ape){
 
         String[] dnaUpperCase = service.arrayToUpperCase(ape.getDna());
@@ -31,6 +34,7 @@ public class ApeController {
 
     @GetMapping
     @RequestMapping("/stats")
+    @Cacheable("dna_stats")
     public StatsDto dnaStatistics(){
         return service.retrieveStatistics();
     }

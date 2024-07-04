@@ -170,7 +170,6 @@ public class ApeService {
         }
     }
 
-    @Cacheable("dna_stats")
     public StatsDto retrieveStatistics(){
         float mutantDna = repository.countByIsSimian(true);
         float humanDna = repository.countByIsSimian(false);
