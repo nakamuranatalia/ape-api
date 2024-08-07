@@ -18,7 +18,6 @@ public class ApeController {
 
     @PostMapping
     @RequestMapping("/simian")
-    @CacheEvict(value="dna_stats", allEntries = true)
     public ResponseEntity<String> isSimian(@RequestBody ApeDto ape){
 
         String[] dnaUpperCase = service.arrayToUpperCase(ape.getDna());

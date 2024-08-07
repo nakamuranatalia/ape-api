@@ -4,7 +4,7 @@ import br.com.ape.dto.StatsDto;
 import lombok.RequiredArgsConstructor;
 import br.com.ape.repository.ApeRepository;
 import br.com.ape.model.Ape;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import org.apache.tomcat.util.buf.StringUtils;
 import java.util.ArrayList;
@@ -14,6 +14,8 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class ApeService {
     private final ApeRepository repository;
+    private final CacheManager cacheManager;
+    private static final String cacheName = "dna_stats";
 
     private boolean isQuadratic (String [] dna){
         int count = 0;
@@ -131,6 +133,10 @@ public class ApeService {
         return dna;
     }
 
+    private void evictCacheValues(String cacheName){
+        cacheManager.getCache(cacheName).clear();
+    }
+
     public boolean isValidDna(String[] dna){
         return isQuadratic(dna) && isDnaSequence(dna) && isValidArray(dna);
     }
@@ -154,6 +160,7 @@ public class ApeService {
                 ape.setDna(dnaString);
                 ape.setSimian(true);
 
+                evictCacheValues(cacheName);
                 repository.save(ape);
 
                 return true;
@@ -163,6 +170,7 @@ public class ApeService {
                 ape.setDna(dnaString);
                 ape.setSimian(false);
 
+                evictCacheValues(cacheName);
                 repository.save(ape);
 
                 return false;
